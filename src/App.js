@@ -1,24 +1,39 @@
-import React from 'react';
+import React,{ useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [counter, setCounter] = useState(0);
+  const initialState = 0;
+
+  const Store = {
+    state: counter
+  }
+
+  const dispatch = (actionFunc) => {
+     Reducer(Store.state, actionFunc)
+    } 
+  
+  const Reducer = (state = initialState, action) => {
+    if(action.type === 'INCREMENT') {
+        setCounter(state+1)
+    }
+  }
+  const incComp = () => {
+    dispatch(incAction())
+  }
+
+  const incAction = () => {
+    return {
+      type: 'INCREMENT'
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Counter: <code> {Store.state} </code> 
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <button onClick={incComp}>INC</button>
     </div>
   );
 }
